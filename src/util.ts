@@ -1,6 +1,6 @@
 import { useDebounce } from '@vueuse/core'
 import type { FormContext } from 'vee-validate'
-import { watchEffect } from 'vue'
+import { watch, watchEffect } from 'vue'
 
 type GenericObject = Record<string, any>
 
@@ -10,7 +10,7 @@ export const useFormAutoSave = <T extends GenericObject>(
 ) => {
   const debounced = useDebounce(form.controlledValues, 1000)
 
-  watchEffect(() => {
+  watch(debounced, () => {
     onSave(debounced.value)
   })
 }
